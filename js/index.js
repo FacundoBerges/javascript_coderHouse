@@ -14,15 +14,15 @@ class product{
 let products = [];
 
 products.push(new product("0", "birdhouse bias", 49.99, "0"));
+products.push(new product("5", "santa cruz Iridescent", 49.99, "1"));
 products.push(new product("1", "birdhouse skull", 26.99, "0"));
-products.push(new product("2", "birdhouse flying falcon", 22.99, "1"));
-products.push(new product("3", "birdhouse spiral", 49.99, "1"));
+products.push(new product("2", "birdhouse flying falcon", 22.99, "0"));
+products.push(new product("8", "Anti-Hero blue", 49.99, "1"));
+products.push(new product("6", "santa cruz Screaming Hand Black", 26.99, "0"));
+products.push(new product("3", "birdhouse spiral", 49.99, "0"));
 products.push(new product("4", "birdhouse triple stack rasta", 59.99, "0"));
-products.push(new product("0", "bmx bias", 49.99, "1"));
-products.push(new product("1", "bmx skull", 26.99, "1"));
-products.push(new product("2", "bmx flying falcon", 22.99, "1"));
-products.push(new product("3", "bmx spiral", 49.99, "1"));
-products.push(new product("4", "bmx triple stack rasta", 59.99, "1"));
+products.push(new product("7", "santa cruz Screaming Hand Red", 22.99, "1"));
+products.push(new product("9", "Anti-Hero Feeding Frenzy", 59.99, "1"));
 
 
 function cargarProductos(){
@@ -33,7 +33,7 @@ function cargarProductos(){
     
     let inputSearch = document.getElementById("search").value.toLowerCase();
     let checkSkates = document.getElementById("cbxSkates");
-    let checkHelmets = document.getElementById("cbxHelmets");
+    let checkDecks = document.getElementById("cbxDecks");
 
     for(let i = 0; i < products.length; i++){
         switch (true) {
@@ -41,7 +41,7 @@ function cargarProductos(){
                 continue;
             case (!checkSkates.checked && checkSkates.value == products[i].productType):
                 continue;
-            case (!checkHelmets.checked && checkHelmets.value == products[i].productType):
+            case (!checkDecks.checked && checkDecks.value == products[i].productType):
                 continue;
             default:
                 break;
@@ -81,8 +81,8 @@ cargarProductos();
 
 let cbxSkates = document.getElementById("cbxSkates");
 cbxSkates.addEventListener("change", cargarProductos);
-let cbxHelmets = document.getElementById("cbxHelmets");
-cbxHelmets.addEventListener("change", cargarProductos);
+let cbxDecks = document.getElementById("cbxDecks");
+cbxDecks.addEventListener("change", cargarProductos);
 
 let search = document.getElementById("search");
 search.addEventListener("change", cargarProductos);
