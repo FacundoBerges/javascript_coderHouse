@@ -10,30 +10,49 @@ class product{
 
 }
 
-
 let products = [];
 
-products.push(new product("0", "birdhouse bias", 49.99, "0"));
-products.push(new product("5", "santa cruz Iridescent", 49.99, "1"));
-products.push(new product("1", "birdhouse skull", 26.99, "0"));
-products.push(new product("2", "birdhouse flying falcon", 22.99, "0"));
-products.push(new product("8", "Anti-Hero blue", 49.99, "1"));
-products.push(new product("6", "santa cruz Screaming Hand Black", 26.99, "0"));
-products.push(new product("3", "birdhouse spiral", 49.99, "0"));
-products.push(new product("4", "birdhouse triple stack rasta", 59.99, "0"));
-products.push(new product("7", "santa cruz Screaming Hand Red", 22.99, "1"));
+products.push(new product("0", "Birdhouse Bias Team", 49.99, "0"));
+products.push(new product("5", "Santa Cruz Iridescent Hand", 49.99, "1"));
+products.push(new product("1", "Birdhouse Hawk Skull", 26.99, "0"));
+products.push(new product("3", "Birdhouse Hawk Spiral", 49.99, "0"));
+products.push(new product("17", "Element Jackass", 59.99, "2"));
+products.push(new product("4", "Birdhouse Triple Stack Rasta", 59.99, "0"));
+products.push(new product("7", "Santa Cruz Screaming Hand Red", 22.99, "1"));
+products.push(new product("23", "Element Park Urethane", 59.99, "3"));
 products.push(new product("9", "Anti-Hero Feeding Frenzy", 59.99, "1"));
+products.push(new product("10", "Element Bark Camo Script", 59.99, "1"));
+products.push(new product("11", "Element Made to Endure", 59.99, "0"));
+products.push(new product("12", "Element Nyjah Huston's Represent", 59.99, "1"));
+products.push(new product("13", "Element Hatched Red / Blue", 59.99, "0"));
+products.push(new product("14", "Element Floral Party", 59.99, "0"));
+products.push(new product("24", "Element Trip Out", 59.99, "3"));
+products.push(new product("15", "Element Trinity", 59.99, "2"));
+products.push(new product("2", "Birdhouse TH Flying Falcon", 22.99, "0"));
+products.push(new product("8", "Anti-Hero Blue", 49.99, "1"));
+products.push(new product("6", "Santa Cruz Screaming Hand Black", 26.99, "0"));
+products.push(new product("16", "Element Classic White / Red", 59.99, "2"));
+products.push(new product("18", "Element Blazin", 59.99, "0"));
+products.push(new product("19", "Spitfire Formula Four White / Green", 59.99, "3"));
+products.push(new product("20", "Spitfire Formula Four Orange / Black", 59.99, "3"));
+products.push(new product("22", "Spitfire Bighead", 59.99, "3"));
+products.push(new product("26", "Toy Machine Vice Monster", 59.99, "1"));
+products.push(new product("27", "Toy Machine Monster Blue", 59.99, "1"));
+products.push(new product("21", "Spitfire Formula Four KB After midnight Conical", 59.99, "3"));
+products.push(new product("28", "Toy Machine Monster Yellow", 59.99, "0"));
+products.push(new product("25", "Element Recuerda White / Gold", 59.99, "3"));
 
-
-function cargarProductos(){
-    let contenedor = document.getElementById("cardsContainer");
+function loadProducts(){
+    let container = document.getElementById("cardsContainer");
     let card;
 
-    contenedor.innerHTML = "";
+    container.innerHTML = "";
     
     let inputSearch = document.getElementById("search").value.toLowerCase();
     let checkSkates = document.getElementById("cbxSkates");
     let checkDecks = document.getElementById("cbxDecks");
+    let checkTrucks = document.getElementById("cbxTrucks");
+    let checkWheels = document.getElementById("cbxWheels");
 
     for(let i = 0; i < products.length; i++){
         switch (true) {
@@ -43,13 +62,17 @@ function cargarProductos(){
                 continue;
             case (!checkDecks.checked && checkDecks.value == products[i].productType):
                 continue;
+            case (!checkTrucks.checked && checkTrucks.value == products[i].productType):
+                continue;
+            case (!checkWheels.checked && checkWheels.value == products[i].productType):
+                continue;
             default:
                 break;
         }
 
         card = `
         <!-- card -->
-        <div class="col-6 col-md-3 col-xl-2 " data-id="${products[i].sku}">
+        <div class="col-6 col-md-3 pb-2" >
             <div class="row border border-dark p-1 m-1">
                 <!-- image -->
                 <div class="col-12 ">
@@ -67,24 +90,84 @@ function cargarProductos(){
                         <span>$ ${products[i].price}</span>
                     </div>
                     <div class="col-6 p-0">
-                        <button class="btn btn-secondary w-100 text-center">Buy</button>
+                        <button class="btn btn-secondary w-100 text-center addToCart" data-id="${products[i].sku}">Buy</button>
                     </div>
                 </div>
             </div>
         </div>`;
-        contenedor.innerHTML += card;
+        container.innerHTML += card;
     }
 
 }
 
-cargarProductos();
+loadProducts();
 
 let cbxSkates = document.getElementById("cbxSkates");
-cbxSkates.addEventListener("change", cargarProductos);
+cbxSkates.addEventListener("change", loadProducts);
 let cbxDecks = document.getElementById("cbxDecks");
-cbxDecks.addEventListener("change", cargarProductos);
+cbxDecks.addEventListener("change", loadProducts);
+let cbxTrucks = document.getElementById("cbxTrucks");
+cbxTrucks.addEventListener("change", loadProducts);
+let cbxWheels = document.getElementById("cbxWheels");
+cbxWheels.addEventListener("change", loadProducts);
 
 let search = document.getElementById("search");
-search.addEventListener("change", cargarProductos);
-search.addEventListener("keyup", cargarProductos);
-search.addEventListener("blur", cargarProductos);
+search.addEventListener("change", loadProducts);
+search.addEventListener("keyup", loadProducts);
+search.addEventListener("blur", loadProducts);
+
+function defineCart(){
+    if(localStorage.cart == undefined){
+        localStorage.setItem("cart", JSON.stringify([]));
+    }
+}
+
+defineCart();
+
+let buyButtons = document.querySelectorAll(".addToCart");
+
+for(let button of buyButtons){
+    button.addEventListener("click", addToCart);
+    button.addEventListener("click", totalPrice);
+}
+
+function addToCart(){
+    let product = searchById(this.dataset.id);
+    let auxCart = JSON.parse(localStorage.cart);
+    auxCart.push(product);
+    localStorage.setItem("cart", JSON.stringify(auxCart));
+}
+
+function totalPrice(){
+    let auxCart = JSON.parse(localStorage.cart);
+    let total = 0;
+    for(product of auxCart){
+        total += product.price;
+    }
+    document.getElementById("totalCart").innerHTML = "$ "+total.toFixed(2);
+}
+
+window.addEventListener("load", totalPrice);
+
+function searchById(id){
+    for(let i = 0; i < products.length; i++){
+        if(id == products[i].sku){
+            return products[i];
+        }
+    }
+    return false;
+}
+
+document.getElementById("cancelCart").addEventListener("click", deleteCart);
+document.getElementById("proceedBuying").addEventListener("click", deleteCart);
+
+function deleteCart(){
+    console.log("hola");
+    localStorage.removeItem("cart");
+    defineCart();
+    totalPrice();
+    // Aviso para saber si se pulso el boton cancelar o continuar compra.
+    if (this.id == "proceedBuying") {
+        alert("Compra efectuada con exito!");
+    }
+}
