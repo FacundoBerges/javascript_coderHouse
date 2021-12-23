@@ -102,19 +102,19 @@ function loadProducts(){
 
 loadProducts();
 
-let cbxSkates = document.getElementById("cbxSkates");
-cbxSkates.addEventListener("change", loadProducts);
-let cbxDecks = document.getElementById("cbxDecks");
-cbxDecks.addEventListener("change", loadProducts);
-let cbxTrucks = document.getElementById("cbxTrucks");
-cbxTrucks.addEventListener("change", loadProducts);
-let cbxWheels = document.getElementById("cbxWheels");
-cbxWheels.addEventListener("change", loadProducts);
+let cbxSkates = $("#cbxSkates");
+cbxSkates.on("change", loadProducts);
+let cbxDecks = $("#cbxDecks");
+cbxDecks.on("change", loadProducts);
+let cbxTrucks = $("#cbxTrucks");
+cbxTrucks.on("change", loadProducts);
+let cbxWheels = $("#cbxWheels");
+cbxWheels.on("change", loadProducts);
 
-let search = document.getElementById("search");
-search.addEventListener("change", loadProducts);
-search.addEventListener("keyup", loadProducts);
-search.addEventListener("blur", loadProducts);
+let search = $("#search");
+search.on("change", loadProducts);
+search.on("keyup", loadProducts);
+search.on("blur", loadProducts);
 
 function defineCart(){
     if(localStorage.cart == undefined){
