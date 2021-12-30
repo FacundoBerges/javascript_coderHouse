@@ -162,7 +162,6 @@ document.getElementById("cancelCart").addEventListener("click", deleteCart);
 document.getElementById("proceedBuying").addEventListener("click", deleteCart);
 
 function deleteCart(){
-    console.log("hola");
     localStorage.removeItem("cart");
     defineCart();
     totalPrice();
@@ -170,4 +169,55 @@ function deleteCart(){
     if (this.id == "proceedBuying") {
         alert("Compra efectuada con exito!");
     }
+}
+
+//div con AJAX de clima actual
+
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position){
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+        let url = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=7ed210cd63a6d46fcc0613cb40d3ca60&units=metric";
+        let weatherContainer = document.getElementById("weatherContainer");
+        weatherContainer.innerHTML = "";
+
+        $.get(url, function(data){
+            console.log(data);
+            let iconName = data.weather[0].icon;
+            console.log(iconName);
+
+            let iconUrl = "http://openweathermap.org/img/wn/"+iconName+"@2x.png";
+            let weather = 
+            `
+            <!-- weather -->
+            <div class="row border border-dark p-3 m-3">
+                <div class="col-12 text-center">
+                    <h2>${data.name}</h2>
+                </div>
+                <div class="col-6 space-between d-flex text-center align-items-center">
+                    <div class="col-6 col-md-4 col-lg-3" id="icon">
+                        <img id="weatherIcon" src="" alt="Weather icon">
+                    </div>
+                    <div class="col-6 col-md-8 col-lg-9">
+                        <h4>weather: ${data.weather[0].main}</h4>
+                        <p>${data.weather[0].description}</p>
+                    </div>
+
+                </div>
+                <div class="col-6 mt-4">
+                    <p>temperature: <strong>${data.main.temp} °C</strong> (feels like ${data.main.feels_like}°)</p>
+                    <p>Min. temp: ${data.main.temp_min}° / Max. temp: ${data.main.temp_max}°</p>
+                </div>
+            </div>
+            `;
+            
+            weatherContainer.innerHTML = weather;
+            $('#weatherIcon').attr('src', iconUrl);
+        });
+
+
+    });
+}
+else {
+    console.log("Geolocalización no disponible en el navegador actual.");
 }
