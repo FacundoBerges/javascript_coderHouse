@@ -1,3 +1,9 @@
+document.getElementById("cartButton").addEventListener("click", showCart);
+
+function showCart(){
+    document.getElementById("cartMenu").classList.toggle("cartMenuOpen");
+}
+
 class product{
 
     constructor(sku, name, price, productType){
@@ -73,7 +79,7 @@ function loadProducts(){
         card = `
         <!-- card -->
         <div class="col-6 col-md-3 pb-2" >
-            <div class="row border border-dark p-1 m-1">
+            <div class="row p-1 m-1">
                 <!-- image -->
                 <div class="col-12 ">
                     <img src="img/${products[i].image}" alt="" class="img-fluid">
@@ -133,6 +139,24 @@ for(let button of buyButtons){
 
 function addToCart(){
     let product = searchById(this.dataset.id);
+
+    let cartItem = 
+    `
+    <div class="row my-4" id="itemId-${product.id}">
+        <div class="col-4 col-md-5 col-lg-6">
+            <img src="img/${product.image}" alt="" class="img-fluid">
+        </div>
+        <div class="col d-flex flex-wrap align-items-center">
+            <div>
+                <h5>${product.name}</h5>
+                <span>$ ${product.price}</span>
+            </div>
+            <button class="deleteItem" data-id="${product.id}">Delete Item</button>
+        </div>
+    </div>
+    `;
+    document.getElementById("cartList").insertAdjacentHTML("beforeend", cartItem);
+
     let auxCart = JSON.parse(localStorage.cart);
     auxCart.push(product);
     localStorage.setItem("cart", JSON.stringify(auxCart));
@@ -171,6 +195,7 @@ function deleteCart(){
     }
 }
 
+
 //div con AJAX de clima actual
 
 if (navigator.geolocation) {
@@ -182,10 +207,7 @@ if (navigator.geolocation) {
         weatherContainer.innerHTML = "";
 
         $.get(url, function(data){
-            console.log(data);
             let iconName = data.weather[0].icon;
-            console.log(iconName);
-
             let iconUrl = "http://openweathermap.org/img/wn/"+iconName+"@2x.png";
             let weather = 
             `
@@ -221,3 +243,4 @@ if (navigator.geolocation) {
 else {
     console.log("Geolocalización no disponible en el navegador actual.");
 }
+

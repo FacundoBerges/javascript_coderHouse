@@ -1,0 +1,48 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    position: relative;
+    z-index: 99;
+}
+
+.bground-color {
+    background-color: brown;
+}
+
+.cartMenuClose {
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    padding-top: 130px;
+    background-color: rgb(206, 218, 218);
+    overflow-y: auto;
+    transform: translateY(-100%);
+    transition: all 500ms ease;
+    z-index: 50;
+}
+
+.cartMenuOpen{
+    transform: translateY(0);
+}
+
+@media (min-width:769px){
+    .cartMenuClose{
+        width: 50vw;
+        transform: translateY(0);
+        transform: translateX(100%);
+    }
+    
+    .cartMenuOpen{
+        transform: translateX(0);
+    }
+}
+
+@media (min-width:1200px){
+    .cartMenuClose{
+        width: 30vw;
+    }
+}
