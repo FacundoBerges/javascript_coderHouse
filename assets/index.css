@@ -1,11 +1,23 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 header {
     position: relative;
     z-index: 99;
+}
+
+img:hover {
+    transition: 500ms;
+    transform: scale(1.1, 1.1);
+
+}
+
+img:not(:hover) {
+    transition: 300ms;
+    transform: scale(1, 1);
 }
 
 .bground-color {
@@ -15,18 +27,28 @@ header {
 .cartMenuClose {
     top: 0;
     right: 0;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     padding-top: 130px;
-    background-color: rgb(206, 218, 218);
-    overflow-y: auto;
+    background-color: rgba(206, 218, 218, 0.5);
+    backdrop-filter: blur(5px) brightness(0.8);
     transform: translateY(-100%);
     transition: all 500ms ease;
     z-index: 50;
 }
 
 .cartMenuOpen{
+    overflow: hidden;
     transform: translateY(0);
+}
+
+#cartList {
+    overflow-y: auto;
+    height: 85%;
+}
+
+#totalPrice {
+    height: 15%;
 }
 
 @media (min-width:769px){
@@ -46,3 +68,4 @@ header {
         width: 30vw;
     }
 }
+
